@@ -6,10 +6,10 @@ class Server
 
 
 import csv
-from typing import List
+from typing import List, Tuple
 
 
-def index_range(page, page_size):
+def index_range(page, page_size) -> Tuple[int, int]:
     """
     return a tuple of size two containing a start
     index and an end index corresponding to the
@@ -48,6 +48,6 @@ class Server:
         start, end = index_range(page, page_size)
         self.dataset()
 
-        if start < len(self.__dataset) > end:
+        if start < end < len(self.__dataset):
             return self.__dataset[start:end]
         return []
