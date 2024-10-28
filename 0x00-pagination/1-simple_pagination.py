@@ -6,8 +6,6 @@ class Server
 
 
 import csv
-import math
-from itertools import islice
 from typing import List
 
 
@@ -50,6 +48,6 @@ class Server:
         start, end = index_range(page, page_size)
         self.dataset()
 
-        if len(self.__dataset) <= end:
-            return []
-        return self.__dataset[start:end]
+        if start < len(self.__dataset) > end:
+            return self.__dataset[start:end]
+        return []
