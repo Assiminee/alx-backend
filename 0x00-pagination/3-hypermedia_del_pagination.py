@@ -4,7 +4,6 @@ Deletion-resilient hypermedia pagination
 """
 
 import csv
-import math
 from typing import List, Dict
 
 
@@ -40,6 +39,12 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        """
+        Pagination that takes into consideration deletions
+        :param index: starting index
+        :param page_size: number of entries to return
+        :return: a dictionary with relevant information
+        """
         indexed = self.indexed_dataset()
         assert index is not None and len(indexed) > index
         data = []
