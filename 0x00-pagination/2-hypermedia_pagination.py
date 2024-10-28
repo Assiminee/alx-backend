@@ -43,6 +43,12 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """
+        Gets pages corresponding to the inputs
+        :param page: page to start at
+        :param page_size: number of entries to get
+        :return: a list of lists containing the data
+        """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
@@ -54,6 +60,12 @@ class Server:
         return []
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """
+        Performs pagination without taking deletion into consideration
+        :param page: starting page
+        :param page_size: number of entries to return
+        :return: dictionary with data + some relevant information
+        """
         data = self.get_page(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
         return {
