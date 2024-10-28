@@ -56,7 +56,6 @@ class Server:
                 for line in islice(reader, start, end):
                     lines.append(line)
         except (FileNotFoundError, IndexError):
-            print("Failed")
             return []
 
         return lines
