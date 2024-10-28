@@ -48,14 +48,8 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
 
         start, end = index_range(page, page_size)
-        lines = []
-        try:
-            with open("Popular_Baby_Names.csv") as file:
-                reader = csv.reader(file)
-                next(reader)
-                for line in islice(reader, start, end):
-                    lines.append(line)
-        except (FileNotFoundError, IndexError):
-            return []
+        self.dataset()
 
-        return lines
+        if len(self.__dataset) <= end:
+            return []
+        return self.__dataset[start:end]
