@@ -1,38 +1,45 @@
 #!/usr/bin/env python3
 """
-BaseCaching module
+LRU caching system
 """
 from base_caching import BaseCaching
 
 
 class LRUCache(BaseCaching):
     """
-    FIFOCache defines a FIFO caching system
+    LRU caching system class
     """
-
     def __init__(self):
-        """
-        Initialize the class with the parent's init method
-        """
+        """Init class method"""
         super().__init__()
-        self.usage = []
+        self.order = {}
 
     def put(self, key, item):
         """
-        Cache a key-value pair
+        Assigns to the dictionary self.cache_data
+        (dictionary from the parent class)
+        the 'item' value for the key 'key'
+        :param key: key to add to the dictionary
+        :param item: value to add to the dictionary
+        :return: void
         """
-        if key is None or item is None:
-            pass
+        if not key or not item:
+            return
+
+        cacheSize = len(self.cache_data.keys())
+
+        if cacheSize >= self.MAX_ITEMS and key not in self.cache_data:
+            lruKey = min(self.order, key=self.order.get)
+            del self.cache_data[lruKey]
+            del self.order[lruKey]
+
+            print("DISCARD: {}".format(lruKey))
+
+        self.cache_data[key] = item
+        if key in self.order:
+            self.order[key] += 1
         else:
-            length = len(self.cache_data)
-            if length >= BaseCaching.MAX_ITEMS and key not in self.cache_data:
-                print("DISCARD: {}".format(self.usage[0]))
-                del self.cache_data[self.usage[0]]
-                del self.usage[0]
-            if key in self.usage:
-                del self.usage[self.usage.index(key)]
-            self.usage.append(key)
-            self.cache_data[key] = item
+            self.order[key] = 1
 
     def get(self, key):
         """
