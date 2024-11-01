@@ -2,8 +2,6 @@
 """
 FIFO caching system
 """
-from functools import cache, cached_property
-
 from base_caching import BaseCaching
 
 
