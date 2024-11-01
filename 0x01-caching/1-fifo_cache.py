@@ -2,6 +2,8 @@
 """
 FIFO caching system
 """
+from functools import cache, cached_property
+
 from base_caching import BaseCaching
 
 
@@ -12,6 +14,7 @@ class FIFOCache(BaseCaching):
     def __init__(self):
         """Init class method"""
         super().__init__()
+        self.order = []
 
     def put(self, key, item):
         """
@@ -25,14 +28,17 @@ class FIFOCache(BaseCaching):
         if not key or not item:
             return
 
-        self.cache_data[key] = item
+        cacheSize = len(self.cache_data.keys())
 
-        if len(self.cache_data.keys()) > self.MAX_ITEMS:
-            asciiRep = [ord(dictKey) for dictKey in self.cache_data.keys()]
-            poppedKey = chr(min(asciiRep))
+        if cacheSize >= self.MAX_ITEMS and key not in self.cache_data:
+            poppedKey = self.order[0]
             del self.cache_data[poppedKey]
+            self.order.remove(poppedKey)
 
             print("DISCARD: {}".format(poppedKey))
+
+        self.cache_data[key] = item
+        self.order.append(key)
 
     def get(self, key):
         """
