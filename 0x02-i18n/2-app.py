@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Flask application module """
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
@@ -18,8 +18,14 @@ babel = Babel(app)
 
 @app.route("/")
 def index():
-    """ Renders 1-index.html file """
-    return render_template("1-index.html")
+    """ Renders 2-index.html file """
+    return render_template("2-index.html")
+
+
+@babel.localeselector
+def get_locale():
+    """ locale selector function """
+    request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 if __name__ == "__main__":
