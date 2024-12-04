@@ -11,18 +11,18 @@ redisClient.on('connect', () => {
     console.log('Redis client connected to the server');
 });
 
-const multi = redisClient.multi();
+const multi = redisClient.MULTI();
 
 multi
-    .hSet('HolbertonSchools', 'Portland', 50, print)
-    .hSet('HolbertonSchools', 'Seattle', 80, print)
-    .hSet('HolbertonSchools', 'New York', 20, print)
-    .hSet('HolbertonSchools', 'Bogota', 20, print)
-    .hSet('HolbertonSchools', 'Cali', 40, print)
-    .hSet('HolbertonSchools', 'Paris', 2, print);
+    .HSET('HolbertonSchools', 'Portland', 50, print)
+    .HSET('HolbertonSchools', 'Seattle', 80, print)
+    .HSET('HolbertonSchools', 'New York', 20, print)
+    .HSET('HolbertonSchools', 'Bogota', 20, print)
+    .HSET('HolbertonSchools', 'Cali', 40, print)
+    .HSET('HolbertonSchools', 'Paris', 2, print);
 
 multi.exec();
 
-redisClient.hgetall('HolbertonSchools', (err, hashset) => {
+redisClient.HGETALL('HolbertonSchools', (err, hashset) => {
     console.log(hashset);
 });
